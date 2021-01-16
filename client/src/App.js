@@ -98,7 +98,7 @@ const App = () => {
                 onClose={() => setShowPopup({})}
                 anchor="top" >
                 <div className="popup">
-                  <h4>{moment(entry.date).format('LL')}</h4>
+                  <p className="popup-date">{moment(entry.date).format('LL')}</p>
                   <h3>{entry.title}</h3>
                   <p>Laji: {entry.species}</p>
                   <p>Pituus: {entry.length}</p>

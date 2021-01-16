@@ -303,29 +303,7 @@
         "line-color": "#e0e0e0"
       }
     },
-    {
-      "id": "lentokentta_viiva2",
-      "type": "line",
-      "source": "taustakartta",
-      "source-layer": "liikenne",
-      "filter": [
-        "any",
-        [
-          "==",
-          "kohdeluokka",
-          32431
-        ],
-        [
-          "==",
-          "kohdeluokka",
-          32432
-        ]
-      ],
-      "paint": {
-        "line-width": 12,
-        "line-color": "#e0e0e0"
-      }
-    },
+    
     {
       "id": "korkeus_viiva",
       "type": "line",
@@ -6551,6 +6529,24 @@
         "line-color": "#505050"
       }
     },
+      {
+        "id": "hallintorajat",
+        "type": "line",
+        "source": "taustakartta",
+        "source-layer": "hallintoalue",
+        "filter": [
+          "any",
+          [
+            "==",
+            "kohdeluokka",
+            651
+          ]
+        ],
+        "paint": {
+          "line-color": "hsl(0,0%,20%)",
+          "line-width": 2
+        }
+      },
     {
       "id": "rakennelmat",
       "type": "line",

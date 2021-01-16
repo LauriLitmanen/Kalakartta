@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import mmlBasemap from './mml-basemap';
+import moment from 'moment';
 
 import { listReportEntries } from './API';
 import CatchReportForm from './CatchReportForm';
@@ -97,9 +98,15 @@ const App = () => {
                 onClose={() => setShowPopup({})}
                 anchor="top" >
                 <div className="popup">
+                  <h4>{moment(entry.date).format('LL')}</h4>
                   <h3>{entry.title}</h3>
                   <p>Laji: {entry.species}</p>
+                  <p>Pituus: {entry.length}</p>
+                  <p>Paino: {entry.weight}</p>
+                  <p>Viehe: {entry.lure}</p>
                   <p>Kalastus tapa: {entry.fishingMethod}</p>
+                  <p>Kuva todo</p>
+
                 </div>
             </Popup>
             ) : null
@@ -167,6 +174,8 @@ export default App;
  */
 
 /** 
+ * https://gitlab.labranet.jamk.fi/data-analysis-and-ai/lam-station-visualization/blob/master/doc/maps/README.md
+ * 
  *  API-avain voidaan välittää rajapintapalveluun myös URL-parametrina
     jos rajapintapalvelun tietty resurssi palauttaa URL-linkin toiseen resurssiin,
     niin tämä linkki ei sisällä API-avainta, vaan käyttäjän on itse lisättävä

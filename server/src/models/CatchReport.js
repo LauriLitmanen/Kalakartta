@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema }= mongoose;
+const { Schema } = mongoose;
 
 const requiredString = {
     type: String,
@@ -46,6 +46,6 @@ const catchReportSchema = new Schema ({
     timestamps: true,
 });
 
-const catchReport = mongoose.model('CatchReport', catchReportSchema);
+const CatchReport = mongoose.model('CatchReport', catchReportSchema);
 
-module.exports = catchReport;
+module.exports = CatchReport;

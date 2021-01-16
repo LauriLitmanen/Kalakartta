@@ -33,7 +33,6 @@ app.get('/', (req, res) => {
 app.use('/api/reports', reports);
 
 app.use(middlewares.notFound);
-
 app.use(middlewares.errorHandler); 
 
 const port = process.env.PORT || 1337;

@@ -1,0 +1,51 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.mapboxgl-popup-close-button {
+  font-size: 24px;
+}
+.mapboxgl-popup-content {
+  margin-left: 60px;
+}
+
+.mapboxgl-popup-tip {
+  display: none;
+}
+
+.marker-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.marker {
+  stroke: #f8c102;
+  transform: translate(-10%, -50%);
+
+  overflow: visible;
+
+}
+
+.popup {
+  max-width: 40vw;
+  padding: 1rem;
+}
+
+.report-form label,
+.report-form input, 
+.report-form textarea,
+.report-form button {
+  margin: 0.5rem 0;
+  display: block;
+  width: 100%;
+}
+
+.error {
+  color: red;
+}

@@ -37,14 +37,43 @@ body {
 }
 
 .popup {
-  max-width: 40vw;
+  height: 60vh;
+  width: 50vw;
+  
   padding: 0rem 1rem 1rem 1rem;
 }
 
-.popup-date {
+.popup-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.popup-icon {
+  height: 35px;
+  width: 35px;
+}
+
+.date {
   margin: 0px 0px 0px 0px;
   font-size: 14px;
 }
+
+.species {}
+
+.length {}
+
+.weight {}
+
+.lure {}
+
+.fishing-method {}
+
+
+
+
 
 .report-form label,
 .report-form input, 

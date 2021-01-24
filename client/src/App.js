@@ -86,20 +86,22 @@ const App = () => {
                 onClose={() => setShowPopup({})}
                 anchor="top" >
                 <div className="popup">
-                <p className="date">{moment(entry.date).format('LL')}</p>
-                  <div className="popup-wrapper">
+                <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
+                <p className="date entry">{moment(entry.date).format('LL')}</p>
+                  
+                  
                     
                       {
-                        //<h3>{entry.title}</h3>
+                        <h3 className="title">{entry.title}</h3>
                       }
-                      <p className="species"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
-                      <p className="length"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}</p>
-                      <p className="weight"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}</p>
-                      <p className="lure"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
-                      <p className="fishing-method"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
-                      <p>Kuva todo</p>
+                      <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
+                      <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
+                      <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
+                      <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
+                      <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
+                      
 
-                  </div>
+                  
                 </div>
             </Popup>
             ) : null

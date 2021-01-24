@@ -38,10 +38,10 @@ const CatchReportForm = ({ location, onClose }) => {
             <input name="lure" ref={register}/>
             <label htmlFor="fishingMethod">Kalastus tapa *</label>
             <input name="fishingMethod" required ref={register}/>
-            <label htmlFor="image">Kuva</label>
-            <input name="image" ref={register}/>
-            <label htmlFor="catchDate">Pvm *</label>
-            <input name="catchDate" type="date" required ref={register}/>
+            <label htmlFor="catchPhoto">Kuva</label>
+            <input name="catchPhoto" ref={register}/>
+            <label htmlFor="date">Pvm *</label>
+            <input name="date" type="date" required ref={register}/>
             <p>* Pakollinen tieto</p>
             <button disabled={loading}>{loading ? 'Loading...' : 'Save Catch Report'}</button>
         </form>

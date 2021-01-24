@@ -31,7 +31,9 @@ const catchReportSchema = new Schema ({
         type: Date,
         default: Date.now,
     },
-    catchPhoto: String,
+    catchPhoto: {
+        type: String
+    },
     latitude: {
     ...requiredNumber,
     min: -90,

@@ -19,6 +19,7 @@ const CatchReportForm = ({ location, onClose }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     let photoFlag = useState(false);
+    let photoFileFlag = useState(false);
     let photoUrl = useState('');
     let photoFile = useState(null);
     const  { register, handleSubmit } = useForm();
@@ -26,13 +27,17 @@ const CatchReportForm = ({ location, onClose }) => {
     const onSubmit = async (data) => {
         try {
             setLoading(true);
-            if (photoFile) {
+            if (photoFileFlag === true) {
                 await upload();
             };
             data.latitude = location.latitude;
             data.longitude = location.longitude;
-            data.catchPhoto = photoFlag ? photoUrl : '';
+            if (photoFlag === true) {
+                data.catchPhoto = photoUrl;
+            }
             await createReportEntry(data);
+            photoFileFlag = false;
+            photoFlag = false;
             onClose();
         }   
         catch (error) {
@@ -45,10 +50,10 @@ const CatchReportForm = ({ location, onClose }) => {
     // Upload image to S3 bucket
     // TODO use AWS SDK instead  
     async function upload(){
-        console.log(photoFile);
+        console.log('upload function photofile: ', photoFile);
         await ReactS3.uploadFile(photoFile, config)
         .then((data) => {
-            console.log(data.location)
+            console.log('data location:', data.location)
             photoUrl = data.location;
             photoFlag = true;
         })
@@ -59,8 +64,9 @@ const CatchReportForm = ({ location, onClose }) => {
 
     function setFile(e){
         console.log('setting file..');
-        console.log(e.target.files[0]);
+        console.log('file:',e.target.files[0]);
         photoFile = e.target.files[0];
+        photoFileFlag = true;
     }
 
     return (

@@ -18,6 +18,7 @@ router.post('/', async (req, res, next) => {
     try {
         const reportEntry = new ReportEntry(req.body);
         const createdEntry = await reportEntry.save();
+        console.log(createdEntry);
         res.json(createdEntry);
     } catch (error) {
         console.log(error.constructor.name);

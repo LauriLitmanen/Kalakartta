@@ -1,27 +1,67 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import ReactS3 from 'react-s3';
 
 import { createReportEntry } from './API';
+
+const config = {
+    bucketName: 'kalakarttabucket',
+    region: 'eu-north-1',
+    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+}
+ 
+/*  Notice that if you don't provide a dirName, the file will be automatically uploaded to the root of your bucket */
+ 
+ 
 
 const CatchReportForm = ({ location, onClose }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    let photoFlag = useState(false);
+    let photoUrl = useState('');
+    let photoFile = useState(null);
     const  { register, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
         try {
             setLoading(true);
+            if (photoFile) {
+                await upload();
+            };
             data.latitude = location.latitude;
             data.longitude = location.longitude;
+            data.catchPhoto = photoFlag ? photoUrl : '';
             await createReportEntry(data);
             onClose();
-        }   catch (error) {
+        }   
+        catch (error) {
             console.log(error);
             setError(error.message);
             setLoading(false);
         }
     };
 
+    // Upload image to S3 bucket
+    // TODO use AWS SDK instead  
+    async function upload(){
+        console.log(photoFile);
+        await ReactS3.uploadFile(photoFile, config)
+        .then((data) => {
+            console.log(data.location)
+            photoUrl = data.location;
+            photoFlag = true;
+        })
+        .catch((err) => {
+            console.error(err)
+        })
+    };
+
+    function setFile(e){
+        console.log('setting file..');
+        console.log(e.target.files[0]);
+        photoFile = e.target.files[0];
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="report-form">
@@ -39,7 +79,7 @@ const CatchReportForm = ({ location, onClose }) => {
             <label htmlFor="fishingMethod">Kalastus tapa *</label>
             <input name="fishingMethod" required ref={register}/>
             <label htmlFor="catchPhoto">Kuva</label>
-            <input name="catchPhoto" ref={register}/>
+            <input name="catchPhoto" type="file" onChange={setFile}/>
             <label htmlFor="date">Pvm *</label>
             <input name="date" type="date" required ref={register}/>
             <p>* Pakollinen tieto</p>

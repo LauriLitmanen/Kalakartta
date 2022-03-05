@@ -15,9 +15,8 @@ export async function createReportEntry(entry) {
     });
     return response.json();
 }
-//EI TOIMI VIELÄ
+
 export async function deleteReportEntry(data) {
-    console.log('API deleting function, with parameter: ', data); 
     const response = await fetch(`${API_URL}/api/reports`, {
         method: 'DELETE',
         headers: {

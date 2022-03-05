@@ -23,7 +23,7 @@ const App = () => {
   });
 
   const getEntries = async () => {
-    console.log('getting entries...');
+    console.log('getting reports..');
     const freshReportEntries = await listReportEntries();
     console.log('got report entries, setting them... ', freshReportEntries);
     setReportEntries(freshReportEntries);
@@ -34,7 +34,6 @@ const App = () => {
   const deleteCatchReport = async (id) => {
     console.log('Deleting report with id: ' + id);
     const data = {id: id};
-    console.log('data: ', data);
     const remainingReportEntries = await deleteReportEntry(data);
     setReportEntries(remainingReportEntries);
   };
@@ -68,7 +67,6 @@ const App = () => {
   // Marker = marker that is displayed on the map
   // Popup = displayed when the marker is clicked (i.e. the report form)
   const displayEntries = function () {
-    console.log('displayEntries function...');
     return (
       reportEntries.map(entry => (
         <React.Fragment key={entry._id}>
@@ -109,7 +107,6 @@ const App = () => {
     
   };
 
-  // Crette
   const createEntry = function() {
     return(
       <>
@@ -143,10 +140,9 @@ const App = () => {
     );
   };
 
-  // MAIN RETRUN
+  // MAIN RETURN
   return (
     <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemap} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
-      {console.log('report entries: ', reportEntries)}
       {(displayEntries())}
       {addEntryLocation ? (createEntry()) : null}
     </ReactMapGL>

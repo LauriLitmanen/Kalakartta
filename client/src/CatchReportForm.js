@@ -35,6 +35,7 @@ const CatchReportForm = ({ location, onClose }) => {
             if (photoFlag === true) {
                 data.catchPhoto = photoUrl;
             }
+            console.log('data', data);
             await createReportEntry(data);
             photoFileFlag = false;
             photoFlag = false;

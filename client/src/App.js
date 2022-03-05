@@ -5,6 +5,7 @@ import mmlBasemap from './mml-basemap';
 import moment from 'moment';
 
 import { listReportEntries } from './API';
+import { deleteReportEntry } from './API';
 import CatchReportForm from './CatchReportForm';
 
 const App = () => {
@@ -22,8 +23,19 @@ const App = () => {
   });
 
   const getEntries = async () => {
-    const reportEntries = await listReportEntries();
-    setReportEntries(reportEntries);
+    console.log('getting entries...');
+    const freshReportEntries = await listReportEntries();
+    console.log('got report entries, setting them... ', freshReportEntries);
+    setReportEntries(freshReportEntries);
+  };
+
+  // delete report entry by id and return remaining entries
+  const deleteCatchReport = async (id) => {
+    console.log('Deleting report with id: ' + id);
+    const data = {id: id};
+    console.log('data: ', data);
+    const remainingReportEntries = await deleteReportEntry(data);
+    setReportEntries(remainingReportEntries);
   };
 
   useEffect(() => {
@@ -50,29 +62,17 @@ const App = () => {
     });
   };
 
-  return (
-    <ReactMapGL
-      {...viewport}
-      transformRequest={transformRequest}
-      //mapboxApiAccessToken= {process.env.REACT_APP_MAPBOX_TOKEN}
-      mapStyle = {mmlBasemap}
-      onViewportChange={setViewport}
-      onDblClick={showAddMarkerPopup}
-    > 
-    {
+
+  // Display each report entry on the map
+  // Marker is the, well marker that is displayed on the map
+  // Popup is displayed when the marker is clicked
+  const displayEntries = function () {
+    console.log('displayEntries function...');
+    return (
       reportEntries.map(entry => (
-        <React.Fragment key={entry._id} >
-          <Marker
-            latitude={entry.latitude}
-            longitude={entry.longitude}
-            
-            >
-            <div className="marker-wrapper"
-              onClick={() => setShowPopup({
-                //...showPopup,
-                [entry._id]: true,
-              })}
-            >
+        <React.Fragment key={entry._id}>
+          <Marker latitude={entry.latitude} longitude={entry.longitude}>
+            <div className="marker-wrapper" onClick={() => setShowPopup({[entry._id]: true})}>
               <img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fish.png"} alt="species icon"/>
             </div>
           </Marker>
@@ -83,37 +83,36 @@ const App = () => {
                 longitude={entry.longitude}
                 closeButton={true}
                 closeOnClick={false}
+                dynamicPosition={true}
                 onClose={() => setShowPopup({})}
                 anchor="top" >
                 <div className="popup">
-                <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
-                <p className="date entry">{moment(entry.date).format('LL')}</p>
-                  
-                  
-                    
-                      {
-                        <h3 className="title">{entry.title}</h3>
-                      }
-                      <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
-                      <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
-                      <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
-                      <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
-                      <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
-                      
-
-                  
+                  <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
+                  <p className="date entry">{moment(entry.date).format('LL')}</p>
+                        {
+                          <h3 className="title">{entry.title}</h3> 
+                        }
+                        <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
+                        <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
+                        <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
+                        <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
+                        <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
+                        <button className="deleteButton" onClick={() => deleteCatchReport(entry._id)}><i className="fa fa-trash-o"></i></button>
                 </div>
             </Popup>
             ) : null
           }
         </React.Fragment>
       ))
-    }
-    {
-      addEntryLocation ? (
-        <>
+    )
+    
+  };
+
+  // 
+  const createEntry = function() {
+    return(
+      <>
         <Marker
-            
             latitude={addEntryLocation.latitude}
             longitude={addEntryLocation.longitude}
             
@@ -131,30 +130,29 @@ const App = () => {
           onClose={() => setAddEntryLocation(null)}
           anchor="top" >
           <div className="popup">
-            <CatchReportForm onClose={() => {
-              setAddEntryLocation(null);
-              getEntries();
-            }} location={addEntryLocation}/>
+            <CatchReportForm 
+              onClose={() => {
+                setAddEntryLocation(null);
+                getEntries();
+              }} 
+              location={addEntryLocation}/>
           </div>
         </Popup>
         </>
-      ) : null
-    }
+    );
+  };
+
+  // MAIN RETRUN
+  return (
+    <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemap} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
+      {console.log('report entries: ', reportEntries)}
+      {(displayEntries())}
+      {addEntryLocation ? (createEntry()) : null}
     </ReactMapGL>
   );
 }
 
 export default App;
-
-/**
- * "sea": {
-      "type": "raster",
-      "tiles": [
-        "https://julkinen.traficom.fi/rasteripalvelu-wms/wms?request=getcapabilities"
-      ],
-      "tileSize": 256
-    },
- */
 
 /** 
  * https://gitlab.labranet.jamk.fi/data-analysis-and-ai/lam-station-visualization/blob/master/doc/maps/README.md

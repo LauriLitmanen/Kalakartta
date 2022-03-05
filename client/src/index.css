@@ -71,6 +71,21 @@ body {
   width: 35px;
 }
 
+.deleteButton {
+  position: absolute;
+  bottom: 0px;
+  right: 16px;
+  bottom: 15px;
+  height: 30px;
+  width: 30px;
+
+}
+
+.fa-trash-o {
+  font-size: 20px;
+  
+}
+
 .entry {
   
 }

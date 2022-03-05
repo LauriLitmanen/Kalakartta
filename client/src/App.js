@@ -29,7 +29,8 @@ const App = () => {
     setReportEntries(freshReportEntries);
   };
 
-  // delete report entry by id and return remaining entries
+  // Delete report entry by id
+  // returns remaining entries and sets them
   const deleteCatchReport = async (id) => {
     console.log('Deleting report with id: ' + id);
     const data = {id: id};
@@ -64,8 +65,8 @@ const App = () => {
 
 
   // Display each report entry on the map
-  // Marker is the, well marker that is displayed on the map
-  // Popup is displayed when the marker is clicked
+  // Marker = marker that is displayed on the map
+  // Popup = displayed when the marker is clicked (i.e. the report form)
   const displayEntries = function () {
     console.log('displayEntries function...');
     return (
@@ -108,7 +109,7 @@ const App = () => {
     
   };
 
-  // 
+  // Crette
   const createEntry = function() {
     return(
       <>

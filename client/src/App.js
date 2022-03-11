@@ -4,14 +4,16 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import mmlBasemap from './mml-basemap';
 import moment from 'moment';
 
-import { listReportEntries } from './API';
+import { fetchEntryById, listReportEntries } from './API';
 import { deleteReportEntry } from './API';
 import CatchReportForm from './CatchReportForm';
+import EditCatchReportForm from './EditCatchReportForm';
 
 const App = () => {
   const [reportEntries, setReportEntries] = useState([]);
   const [showPopup, setShowPopup] = useState({});
   const [addEntryLocation, setAddEntryLocation] = useState(null);
+  const [entryToEdit, setEntryToEdit] = useState(null);
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '100vh',
@@ -36,6 +38,14 @@ const App = () => {
     const data = {id: id};
     const remainingReportEntries = await deleteReportEntry(data);
     setReportEntries(remainingReportEntries);
+  };
+
+  const editCatchReport = async (id) => {
+    const fetchedEntryToEdit = await fetchEntryById(id);
+    setShowPopup({}); // hide the report entry that is gonna be edited
+    setEntryToEdit( 
+      fetchedEntryToEdit
+    );
   };
 
   useEffect(() => {
@@ -97,6 +107,7 @@ const App = () => {
                         <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
                         <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
                         <button className="deleteButton" onClick={() => deleteCatchReport(entry._id)}><i className="fa fa-trash-o"></i></button>
+                        <button className="editButton" onClick={() => editCatchReport(entry._id)}><i className="fa fa-pencil"></i></button>
                 </div>
             </Popup>
             ) : null
@@ -107,13 +118,37 @@ const App = () => {
     
   };
 
+  const editEntry = function() {
+    return(
+      <Popup
+      latitude={entryToEdit.latitude}
+      longitude={entryToEdit.longitude}
+      closeButton={true}
+      closeOnClick={false}
+      onClose={() => {
+        setEntryToEdit(null);
+        }
+      }
+      >
+        <div className="popup">
+          <EditCatchReportForm 
+                onClose={() => {
+                  setEntryToEdit(null);
+                  getEntries();
+                }} 
+          entryToEdit={entryToEdit}/>
+        </div>
+      </Popup>
+    );
+  };
+ 
   const createEntry = function() {
     return(
       <>
         <Marker
             latitude={addEntryLocation.latitude}
             longitude={addEntryLocation.longitude}
-            
+
             >
             <div>
               
@@ -145,6 +180,7 @@ const App = () => {
     <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemap} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
       {(displayEntries())}
       {addEntryLocation ? (createEntry()) : null}
+      {entryToEdit ? (editEntry()) : null}
     </ReactMapGL>
   );
 }

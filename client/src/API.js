@@ -16,6 +16,17 @@ export async function createReportEntry(entry) {
     return response.json();
 }
 
+export async function updateReportEntry(id, updatedEntry) {
+    const response = await fetch(`${API_URL}/api/reports/updateReport/${id}`, {
+       method: 'PUT',
+       headers: {
+            'content-type': 'application/json',
+       },
+       body: JSON.stringify(updatedEntry)  
+    });
+    return response.json();
+}
+
 export async function deleteReportEntry(data) {
     const response = await fetch(`${API_URL}/api/reports`, {
         method: 'DELETE',
@@ -23,6 +34,16 @@ export async function deleteReportEntry(data) {
             'content-type': 'application/json',
         },
         body: JSON.stringify(data),
+    });
+    return response.json();
+}
+
+export async function fetchEntryById(id) {
+    const response = await fetch(`${API_URL}/api/reports/report/${id}`, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+        },
     });
     return response.json();
 }

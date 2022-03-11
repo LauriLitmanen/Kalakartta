@@ -41,6 +41,31 @@ router.delete('/', async (req, res, next) => {
     }
 });
 
+router.get('/report/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const entry = await CatchReport.findById(id);
+        res.json(entry);
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+router.put('/updateReport/:id', async (req, res, next) => {
+    try {
+        const filter = { _id: req.params.id };
+        const updatedEntry = await CatchReport.update(filter, req.body);
+        res.json(updatedEntry);
+    } catch (error) {
+        console.log(error);
+        if (error.name === 'ValidationError'){
+            res.status(422);
+        }
+        next(error);
+    }
+});
+
 
 
 

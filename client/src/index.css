@@ -13,10 +13,10 @@ body {
 }
 .mapboxgl-popup-content {
   margin-left: 60px;
-  /*border-radius: 20px;*/
-  background-color: rgb(80, 80, 80);
-  color: white;
-  padding: 0px;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  padding: 20px 20px 20px 20px;
 }
 
 .mapboxgl-popup-tip {
@@ -47,9 +47,6 @@ body {
   max-width: 800px;
   position: relative;
   text-align: center;
-  
-  
-  /*padding: 0rem 1rem 1rem 1rem;*/
 }
 
 .popup-wrapper {
@@ -82,6 +79,23 @@ body {
 }
 
 .fa-trash-o {
+  font-size: 20px;
+  
+}
+
+
+
+.editButton {
+  position: absolute;
+  bottom: 0px;
+  right: 60px;
+  bottom: 15px;
+  height: 30px;
+  width: 30px;
+
+}
+
+.fas-pen {
   font-size: 20px;
   
 }

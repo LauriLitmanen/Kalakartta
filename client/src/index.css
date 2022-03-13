@@ -32,14 +32,23 @@ body {
   justify-content: center;
   align-items: center;
   margin: auto;
+  cursor: pointer;
+}
+
+.mapboxgl-marker {
+  width: 0px;
+  height: 0px;
+
 }
 
 .marker {
-  stroke: #f8c102;
-  transform: translate(-10%, -50%);
-
+  transform: translate(-30%, -70%);
   overflow: visible;
+}
 
+.marker-icon {
+  height: 80px;
+  width: 80px;
 }
 
 .popup {

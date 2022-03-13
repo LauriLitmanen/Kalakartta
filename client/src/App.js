@@ -11,7 +11,7 @@ import EditCatchReportForm from './EditCatchReportForm';
 
 const App = () => {
   const [reportEntries, setReportEntries] = useState([]);
-  const [showPopup, setShowPopup] = useState({});
+  const [entryClicked, setEntryClicked] = useState(null);
   const [addEntryLocation, setAddEntryLocation] = useState(null);
   const [entryToEdit, setEntryToEdit] = useState(null);
   const [viewport, setViewport] = useState({
@@ -42,7 +42,7 @@ const App = () => {
 
   const editCatchReport = async (id) => {
     const fetchedEntryToEdit = await fetchEntryById(id);
-    setShowPopup({}); // hide the report entry that is gonna be edited
+    setEntryClicked(null); // hide the report entry that is gonna be edited
     setEntryToEdit( 
       fetchedEntryToEdit
     );
@@ -72,50 +72,49 @@ const App = () => {
     });
   };
 
+  // Display the clicked entry's info on a Popup
+  const displayEntryPopup = function () {
+    var entry = entryClicked;
+    return (
+      <Popup
+        latitude={entry.latitude}
+        longitude={entry.longitude}
+        closeButton={true}
+        closeOnClick={false}
+        dynamicPosition={true}
+        onClose={() => setEntryClicked(null)}
+        anchor="right" >
+        <div className="popup">
+          <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
+          <p className="date entry">{moment(entry.date).format('LL')}</p>
+                {
+                  <h3 className="title">{entry.title}</h3> 
+                }
+                <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
+                <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
+                <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
+                <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
+                <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
+                <button className="deleteButton" onClick={() => deleteCatchReport(entry._id)}><i className="fa fa-trash-o"></i></button>
+                <button className="editButton" onClick={() => editCatchReport(entry._id)}><i className="fa fa-pencil"></i></button>
+        </div>
+      </Popup>
+    )
+  };
 
-  // Display each report entry on the map
-  // Marker = marker that is displayed on the map
-  // Popup = displayed when the marker is clicked (i.e. the report form)
-  const displayEntries = function () {
+  // Display each report entry on the map as a marker
+  const displayMarkers = function () {
     return (
       reportEntries.map(entry => (
         <React.Fragment key={entry._id}>
           <Marker latitude={entry.latitude} longitude={entry.longitude}>
-            <div className="marker-wrapper" onClick={() => setShowPopup({[entry._id]: true})}>
-              <img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fish.png"} alt="species icon"/>
+            <div className="marker-wrapper marker" onClick={() => setEntryClicked(entry)}>
+              <img className="marker-icon" src={process.env.PUBLIC_URL + "/images/" + "bobber.png"} alt="species icon"/>
             </div>
           </Marker>
-          {
-            showPopup[entry._id] ? (
-              <Popup
-                latitude={entry.latitude}
-                longitude={entry.longitude}
-                closeButton={true}
-                closeOnClick={false}
-                dynamicPosition={true}
-                onClose={() => setShowPopup({})}
-                anchor="top" >
-                <div className="popup">
-                  <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
-                  <p className="date entry">{moment(entry.date).format('LL')}</p>
-                        {
-                          <h3 className="title">{entry.title}</h3> 
-                        }
-                        <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
-                        <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
-                        <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
-                        <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
-                        <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
-                        <button className="deleteButton" onClick={() => deleteCatchReport(entry._id)}><i className="fa fa-trash-o"></i></button>
-                        <button className="editButton" onClick={() => editCatchReport(entry._id)}><i className="fa fa-pencil"></i></button>
-                </div>
-            </Popup>
-            ) : null
-          }
         </React.Fragment>
       ))
     )
-    
   };
 
   const editEntry = function() {
@@ -125,18 +124,10 @@ const App = () => {
       longitude={entryToEdit.longitude}
       closeButton={true}
       closeOnClick={false}
-      onClose={() => {
-        setEntryToEdit(null);
-        }
-      }
+      onClose={() => {setEntryToEdit(null);}}
       >
         <div className="popup">
-          <EditCatchReportForm 
-                onClose={() => {
-                  setEntryToEdit(null);
-                  getEntries();
-                }} 
-          entryToEdit={entryToEdit}/>
+          <EditCatchReportForm onClose={() => {setEntryToEdit(null); getEntries();}} entryToEdit={entryToEdit} />
         </div>
       </Popup>
     );
@@ -145,42 +136,36 @@ const App = () => {
   const createEntry = function() {
     return(
       <>
-        <Marker
-            latitude={addEntryLocation.latitude}
-            longitude={addEntryLocation.longitude}
-
-            >
-            <div>
-              
-            <img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fish.png"} alt="fish icon"/>
-            </div>
-          </Marker>
+        <Marker 
+          latitude={addEntryLocation.latitude}
+          longitude={addEntryLocation.longitude}>
+          <div>
+            <img className="marker-icon" src={process.env.PUBLIC_URL + "/images/" + "bobber.png"} alt="fish icon"/>
+          </div>
+        </Marker>
         <Popup
           latitude={addEntryLocation.latitude}
           longitude={addEntryLocation.longitude}
           closeButton={true}
           closeOnClick={false}
           onClose={() => setAddEntryLocation(null)}
-          anchor="top" >
+          anchor="top" 
+          >
           <div className="popup">
-            <CatchReportForm 
-              onClose={() => {
-                setAddEntryLocation(null);
-                getEntries();
-              }} 
-              location={addEntryLocation}/>
+            <CatchReportForm onClose={() => {setAddEntryLocation(null);getEntries();}} location={addEntryLocation}/>
           </div>
         </Popup>
-        </>
+      </>
     );
   };
 
   // MAIN RETURN
   return (
     <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemap} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
-      {(displayEntries())}
+      {(displayMarkers())}
       {addEntryLocation ? (createEntry()) : null}
       {entryToEdit ? (editEntry()) : null}
+      {entryClicked ? (displayEntryPopup()) : null }
     </ReactMapGL>
   );
 }

@@ -1,5 +1,21 @@
 const API_URL = 'http://localhost:1337';
 
+export async function getS3SecureUrl() {
+    const response = await fetch(`${API_URL}/api/reports/s3Url/`);
+    return response.json();
+}
+
+export async function uploadToS3Bucket(url, file) {
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        body: file,
+    });
+    return response;
+}
+
 export async function listReportEntries() {
     const response = await fetch(`${API_URL}/api/reports`);
     return response.json();

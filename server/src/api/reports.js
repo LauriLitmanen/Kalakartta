@@ -1,6 +1,17 @@
 const { Router } = require('express');
 const CatchReport = require('../models/CatchReport');
 const router = Router();
+const aws = require('../aws-s3');
+
+router.get('/s3Url', async (req, res, next) => {
+    try {
+        const url = await aws.generateUploadURL();
+        res.send({url});
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
 
 router.get('/', async (req, res, next) => {
     try {

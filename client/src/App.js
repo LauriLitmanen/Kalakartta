@@ -37,6 +37,7 @@ const App = () => {
     console.log('Deleting report with id: ' + id);
     const data = {id: id};
     const remainingReportEntries = await deleteReportEntry(data);
+    setEntryClicked(null);
     setReportEntries(remainingReportEntries);
   };
 

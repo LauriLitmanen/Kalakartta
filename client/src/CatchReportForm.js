@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactS3 from 'react-s3';
 
-import { createReportEntry } from './API';
+import { createReportEntry, getS3SecureUrl, uploadToS3Bucket } from './API';
 
 const config = {
     bucketName: 'kalakarttabucket',
@@ -48,25 +48,21 @@ const CatchReportForm = ({ location, onClose }) => {
         }
     };
 
-    // Upload image to S3 bucket
-    // TODO use AWS SDK instead  
+    // Upload image to S3 bucket  
     async function upload(){
-        console.log('upload function photofile: ', photoFile);
-        await ReactS3.uploadFile(photoFile, config)
-        .then((data) => {
-            console.log('data location:', data.location)
-            photoUrl = data.location;
-            photoFlag = true;
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+        // Get a presignedUrl to upload the image to S3 bucket
+        // More info here: https://docs.aws.amazon.com/AmazonS3/latest/userguide/PresignedUrlUploadObject.html
+        const responseObject = await getS3SecureUrl();
+        const url = responseObject.url;
+        const response = await uploadToS3Bucket(url, photoFile);
+        photoUrl = response.url.split('?')[0];
+        photoFlag = true;
     };
 
     function setFile(e){
-        console.log('setting file..');
-        console.log('file:',e.target.files[0]);
+        console.log('Setting file..');
         photoFile = e.target.files[0];
+        console.log('File: ', photoFile);
         photoFileFlag = true;
     }
 

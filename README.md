@@ -1,6 +1,5 @@
 
 <!-- PROJECT LOGO -->
-<br />
 <div align="center">
    <img src="client/public/images/bobber.png/" alt="Logo" width="80" height="80">
    <h3 align="center">Kalakartta</h3>
@@ -33,4 +32,6 @@
    - [ ] Ability to change the image on the S3 bucket 
 - [x] Ability to delete Catch Reports
    - [ ] Delete the image from S3 bucket aswell
- 
+- [ ] Write tests
+- [ ] Launch on AWS 
+   - [ ] Create Cloudformation templates

@@ -32,9 +32,9 @@
    - [ ] Ability to change the image on the S3 bucket 
 - [x] Ability to delete Catch Reports
    - [ ] Delete the image from S3 bucket aswell
+- [ ] Styling
+   - [ ] Popup
+   - [ ] Catch Report Form
 - [ ] Write tests
-.
-.
-.
 - [ ] Launch on AWS 
    - [ ] Create Cloudformation templates

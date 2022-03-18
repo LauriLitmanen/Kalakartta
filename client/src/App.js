@@ -33,6 +33,7 @@ const App = () => {
 
   // Delete report entry by id
   // returns remaining entries and sets them
+  // TODO DELETE IMAGE FROM AWS S3 BUCKET ASWELL
   const deleteCatchReport = async (id) => {
     console.log('Deleting report with id: ' + id);
     const data = {id: id};
@@ -134,6 +135,7 @@ const App = () => {
     );
   };
  
+  // TODO CLIENT SIDE VALIDATION
   const createEntry = function() {
     return(
       <>

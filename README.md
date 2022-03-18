@@ -1,10 +1,36 @@
-start client: npm start
 
-start server: npm run dev
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+   <img src="client/public/images/bobber.png/" alt="Logo" width="80" height="80">
+   <h3 align="center">Kalakartta</h3>
+   <p align="center">
+      Keep track of what fish you catch!
+   </p>
+</div>
 
-start mongodb: 
-   "From Windows Explorer/File Explorer, go to C:\Program Files\MongoDB\Server\4.4\bin\ directory and double-click on mongo.exe.
-   
-   OR 
-   
-   "Open a Command Interpreter with Administrative privileges and run: "C:\Program Files\MongoDB\Server\4.4\bin\mongo.exe"
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+<img src="client/public/images/Kalakartta.png/" alt="Website screenshot" style="max-width: 100%;">
+
+### Built With
+
+* [React.js](https://reactjs.org/)
+* [Express.js](https://expressjs.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Mongoose.js](https://mongoosejs.com/)
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [x] Draw Map
+- [x] Add Catch Reports on the map
+- [x] Add images to Catch Reports
+   - [x] Upload images to AWS S3 bucket
+- [x] Ability to edit Catch Reports
+   - [ ] Ability to change the image on the S3 bucket 
+- [x] Ability to delete Catch Reports
+   - [ ] Delete the image from S3 bucket aswell
+ 

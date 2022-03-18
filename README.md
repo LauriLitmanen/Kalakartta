@@ -12,7 +12,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="client/public/images/Kalakartta.png/" alt="Website screenshot" style="max-width: 100%;">
+<img src="client/public/images/Kalakartta.PNG/" alt="Website screenshot" style="max-width: 100%;">
 
 ### Built With
 

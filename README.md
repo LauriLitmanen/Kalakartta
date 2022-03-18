@@ -11,7 +11,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="client/public/images/Kalakartta.png/" alt="Website screenshot" style="max-width: 100%;">
+<img src="client/public/images/Kalakartta.PNG/" alt="Website screenshot" style="max-width: 100%;">
 
 ### Built With
 
@@ -32,6 +32,10 @@
    - [ ] Ability to change the image on the S3 bucket 
 - [x] Ability to delete Catch Reports
    - [ ] Delete the image from S3 bucket aswell
+<<<<<<< HEAD
 - [ ] Write tests
 - [ ] Launch on AWS 
    - [ ] Create Cloudformation templates
+=======
+ 
+>>>>>>> 0ae6645d8b9b5ece7bdd95572e525e73c1ec9783

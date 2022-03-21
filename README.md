@@ -19,6 +19,8 @@
 * [Express.js](https://expressjs.com/)
 * [MongoDB](https://www.mongodb.com/)
 * [Mongoose.js](https://mongoosejs.com/)
+* [Mapbox GL JS](https://www.mapbox.com/mapbox-gljs)
+* [React Map GL](https://visgl.github.io/react-map-gl/)
 
 
 <!-- ROADMAP -->

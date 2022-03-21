@@ -1,0 +1,12 @@
+.report-form label,
+.report-form input, 
+.report-form textarea,
+.report-form button {
+  margin: 0.5rem 0;
+  display: block;
+  width: 100%;
+}
+
+.report-form input {
+    width: 90% !important;
+  }

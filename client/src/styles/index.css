@@ -23,10 +23,6 @@ body {
   display: none;
 }
 
-.report-form input {
-  width: 90% !important;
-}
-
 .marker-wrapper {
   display: flex;
   justify-content: center;
@@ -163,18 +159,6 @@ body {
   left: 16px;
 }
 
-
-
-
-
-.report-form label,
-.report-form input, 
-.report-form textarea,
-.report-form button {
-  margin: 0.5rem 0;
-  display: block;
-  width: 100%;
-}
 
 .error {
   color: red;

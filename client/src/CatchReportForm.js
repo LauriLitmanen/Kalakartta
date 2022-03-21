@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import ReactS3 from 'react-s3';
+import './styles/catchReportForm.css';
+
 
 import { createReportEntry, getS3SecureUrl, uploadToS3Bucket } from './API';
 

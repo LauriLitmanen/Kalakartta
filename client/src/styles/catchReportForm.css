@@ -1,12 +1,42 @@
-.report-form label,
-.report-form input, 
-.report-form textarea,
-.report-form button {
+.report-form {
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  
+  margin: 10px;
+  }
+ 
+.report-form textarea {
   margin: 0.5rem 0;
-  display: block;
   width: 100%;
 }
 
+.report-form label {
+  padding: 10px;
+  width: fit-content;
+}
+
 .report-form input {
-    width: 90% !important;
-  }
+  width: 80% !important;
+  margin-left: 10px;
+  padding: 5px;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #BAE3F7;
+}
+
+.report-form input:focus {
+border-color: #81F0EA;;
+}
+
+.report-form button {
+	color: white;
+	border: none;
+	padding: 20px 40px 20px 40px;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  background-color: #81F0EA;
+  text-transform: uppercase;
+}

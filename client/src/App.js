@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import mmlBasemap from './mml-basemap';
+import mmlBasemapCustom from './mml-basemap-custom';
 import moment from 'moment';
 
 import { fetchEntryById, listReportEntries } from './API';
@@ -17,10 +18,10 @@ const App = () => {
   const [viewport, setViewport] = useState({
     width: '100vw',
     height: '100vh',
-    latitude: 60.193665,
-    longitude: 24.928380,
-    zoom: 6,
-    minZoom: 6,
+    latitude: 65.0,
+    longitude: 23.0,
+    zoom: 5,
+    minZoom: 5,
     maxZoom: 18,
   });
 
@@ -87,18 +88,24 @@ const App = () => {
         onClose={() => setEntryClicked(null)}
         anchor="right" >
         <div className="popup">
-          <img className="popup-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
-          <p className="date entry">{moment(entry.date).format('LL')}</p>
-                {
-                  <h3 className="title">{entry.title}</h3> 
-                }
-                <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
-                <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
-                <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
-                <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
-                <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
+          <div className='popup-wrapper'>
+            <div className='popup-header'>
+                <p className="date entry">{moment(entry.date).format('LL')}</p>  
+                <h3 className="title">{entry.title}</h3> 
                 <button className="deleteButton" onClick={() => deleteCatchReport(entry._id)}><i className="fa fa-trash-o"></i></button>
                 <button className="editButton" onClick={() => editCatchReport(entry._id)}><i className="fa fa-pencil"></i></button>
+            </div>
+            <div className="popup-img">
+              <img className="entry-img" src={entry.catchPhoto ? entry.catchPhoto : process.env.PUBLIC_URL + "/images/" + "stencil.png"} alt=""/>
+            </div>
+            <div className="popup-footer">  
+              <p className="species entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "trout.png"} alt="species icon"/> {entry.species}</p>
+              <p className="length entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "length.png"} alt="length icon"/> {entry.length}{entry.length ? "cm" : "-"}</p>
+              <p className="weight entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "weight.png"} alt="weight icon"/> {entry.weight}{entry.weight ? "kg" : "-"}</p>
+              <p className="lure entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "lure.png"} alt="lure icon"/> {entry.lure}</p>
+              <p className="fishing-method entry"><img className="popup-icon" src={process.env.PUBLIC_URL + "/images/" + "fishing-rod.png"} alt="fishing rod icon"/> {entry.fishingMethod}</p>
+            </div>
+          </div>
         </div>
       </Popup>
     )
@@ -164,7 +171,7 @@ const App = () => {
 
   // MAIN RETURN
   return (
-    <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemap} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
+    <ReactMapGL {...viewport} transformRequest={transformRequest} mapStyle = {mmlBasemapCustom} onViewportChange={setViewport} onDblClick={showAddMarkerPopup}> 
       {(displayMarkers())}
       {addEntryLocation ? (createEntry()) : null}
       {entryToEdit ? (editEntry()) : null}

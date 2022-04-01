@@ -2,18 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './styles/catchReportForm.css';
 
-
 import { createReportEntry, getS3SecureUrl, uploadToS3Bucket } from './API';
-
-const config = {
-    bucketName: 'kalakarttabucket',
-    region: 'eu-north-1',
-    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-}
- 
-/*  Notice that if you don't provide a dirName, the file will be automatically uploaded to the root of your bucket */
- 
  
 
 const CatchReportForm = ({ location, onClose }) => {
@@ -68,27 +57,29 @@ const CatchReportForm = ({ location, onClose }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="report-form">
-            {error ? <h3 className="error">{error}</h3> : null}
-            <label htmlFor="title">Tunniste *</label>
-            <input name="title" required ref={register}/>
-            <label htmlFor="species">Laji *</label>
-            <input name="species" required ref={register}/>
-            <label htmlFor="length">Pituus (cm)</label>
-            <input name="length" ref={register}/>
-            <label htmlFor="weight">Paino (kg)</label>
-            <input name="weight" ref={register}/>
-            <label htmlFor="lure">Viehe</label>
-            <input name="lure" ref={register}/>
-            <label htmlFor="fishingMethod">Kalastus tapa *</label>
-            <input name="fishingMethod" required ref={register}/>
-            <label htmlFor="catchPhoto">Kuva</label>
-            <input name="catchPhoto" type="file" onChange={setFile}/>
-            <label htmlFor="date">Pvm *</label>
-            <input name="date" type="date" required ref={register}/>
-            <p>* Pakollinen tieto</p>
-            <button disabled={loading}>{loading ? 'Loading...' : 'Save Catch Report'}</button>
-        </form>
+        <div className="report">
+            <form onSubmit={handleSubmit(onSubmit)} className="report-form">
+                {error ? <h3 className="error">{error}</h3> : null}
+                <label htmlFor="title">Tunniste *</label>
+                <input name="title" required ref={register}/>
+                <label htmlFor="species">Laji *</label>
+                <input name="species" required ref={register}/>
+                <label htmlFor="length">Pituus (cm)</label>
+                <input name="length" ref={register}/>
+                <label htmlFor="weight">Paino (kg)</label>
+                <input name="weight" ref={register}/>
+                <label htmlFor="lure">Viehe</label>
+                <input name="lure" ref={register}/>
+                <label htmlFor="fishingMethod">Kalastus tapa *</label>
+                <input name="fishingMethod" required ref={register}/>
+                <label htmlFor="catchPhoto">Kuva</label>
+                <input name="catchPhoto" type="file" onChange={setFile}/>
+                <label htmlFor="date">Pvm *</label>
+                <input name="date" type="date" required ref={register}/>
+                <p>* Pakollinen tieto</p>
+                <button disabled={loading}>{loading ? 'Loading...' : 'Save'}</button>
+            </form>
+        </div>
     );  
 };
 

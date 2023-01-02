@@ -37,20 +37,22 @@
 - [ ] Styling
    - [ ] Popup
    - [ ] Catch Report Form
+- [ ] Add Docker
+  - [x] Dockerize the database with docker-compose.yaml
+  - [ ] Dockerize the whole app with docker-compose.yaml
 - [ ] Write tests
 - [ ] Launch on AWS 
-   - [ ] Create Cloudformation templates
+  
 
 ## How to run on your machine
 
-1. clone the repo to your machine
-2. move into the project directory
-3. run npm install
-4. get the db up and running with the command *docker-compose up*
-5. move into the server directory and run the commands:
-   - *npm install*
-   - *npm run dev*
-6. move into  the client directory and run the commands:
-   - *npm install*
-   - *npm start*
+1. Clone the repo to your machine
+2. Move into the project directory
+3. Get the database up and running with the command ```docker-compose up``` and close the database with the command ```docker-compose down```
+4. Move into the server directory and run the commands:
+   - ```npm install```
+   - ```npm run dev```
+5. Move into  the client directory and run the commands:
+   - ```npm install```
+   - ```npm start```
 

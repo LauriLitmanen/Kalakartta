@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
-//import mmlBasemap from './mml-basemap';
 import mmlBasemapCustom from './mml-basemap-custom';
 import moment from 'moment';
 
@@ -11,7 +10,6 @@ import CatchReportForm from './CatchReportForm';
 import EditCatchReportForm from './EditCatchReportForm';
 
 const App = () => {
-  console.log('testing testing');
   const [reportEntries, setReportEntries] = useState([]);
   const [entryClicked, setEntryClicked] = useState(null);
   const [addEntryLocation, setAddEntryLocation] = useState(null);

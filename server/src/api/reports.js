@@ -17,8 +17,6 @@ router.get('/', async (req, res, next) => {
     try {
         const entries = await CatchReport.find();
         entries.forEach(entry => console.log(entry._id));
-        console.log('nodemonworks!!! part 2 test test');
-        console.log(entries._id);
         res.json(entries);
     } catch (error) {
         next(error);
@@ -29,7 +27,6 @@ router.post('/', async (req, res, next) => {
     try {
         const reportEntry = new CatchReport(req.body);
         const createdEntry = await reportEntry.save();
-        console.log(createdEntry);
         res.json(createdEntry);
     } catch (error) {
         console.log(error.constructor.name);
@@ -43,7 +40,6 @@ router.post('/', async (req, res, next) => {
 // Deletes report entry and returns list of remaining report entries
 router.delete('/', async (req, res, next) => {
     try {
-        console.log('nodemontest');
         const id = req.body.id;
         await CatchReport.deleteOne({ _id: id });
         const entries = await CatchReport.find();

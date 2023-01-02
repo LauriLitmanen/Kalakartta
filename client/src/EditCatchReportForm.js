@@ -29,28 +29,28 @@ const EditCatchReportForm = ({ entryToEdit, onClose }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="report-form">
             {error ? <h3 className="error">{error}</h3> : null}
             <label htmlFor="title">Tunniste *</label>
-            <input name="title" defaultValue={entryToEdit.title} required ref={register}/>
+            <input name="title" defaultValue={entryToEdit.title} required {...register ('title', { required: true })}/>
             
             <label htmlFor="species">Laji *</label>
-            <input name="species" defaultValue={entryToEdit.species} required ref={register}/>
+            <input name="species" defaultValue={entryToEdit.species} required {...register ('species', { required: true })}/>
 
             <label htmlFor="length">Pituus (cm)</label>
-            <input name="length" defaultValue={entryToEdit.length} ref={register}/>
+            <input name="length" defaultValue={entryToEdit.length} {...register ('length')}/>
 
             <label htmlFor="weight">Paino (kg)</label>
-            <input name="weight" defaultValue={entryToEdit.weight} ref={register}/>
+            <input name="weight" defaultValue={entryToEdit.weight} {...register ('weight')}/>
 
             <label htmlFor="lure">Viehe</label>
-            <input name="lure" defaultValue={entryToEdit.lure} ref={register}/>
+            <input name="lure" defaultValue={entryToEdit.lure} {...register ('lure')}/>
 
             <label htmlFor="fishingMethod">Kalastus tapa *</label>
-            <input name="fishingMethod" defaultValue={entryToEdit.fishingMethod} required ref={register}/>
+            <input name="fishingMethod" defaultValue={entryToEdit.fishingMethod} required {...register ('fishingMethod', { required: true })}/>
 
             <label htmlFor="catchPhoto">Kuva</label>
             <input name="catchPhoto" type="file" />
 
             <label htmlFor="date">Pvm *</label>
-            <input name="date" type="date" defaultValue={entryDate.toISOString().split('T')[0]} required ref={register}/>
+            <input name="date" type="date" defaultValue={entryDate.toISOString().split('T')[0]} required {...register ('date', { required: true })}/>
 
             <p>* Pakollinen tieto</p>
             <button disabled={loading}>{loading ? 'Loading...' : 'Save Catch Report'}</button>

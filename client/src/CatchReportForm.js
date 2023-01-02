@@ -61,21 +61,21 @@ const CatchReportForm = ({ location, onClose }) => {
             <form onSubmit={handleSubmit(onSubmit)} className="report-form">
                 {error ? <h3 className="error">{error}</h3> : null}
                 <label htmlFor="title">Tunniste *</label>
-                <input name="title" required ref={register}/>
+                <input name="title" required {...register('title', { required: true })}/>
                 <label htmlFor="species">Laji *</label>
-                <input name="species" required ref={register}/>
+                <input name="species" required {...register('species', { required: true })}/>
                 <label htmlFor="length">Pituus (cm)</label>
-                <input name="length" ref={register}/>
+                <input name="length" {...register ('length')}/>
                 <label htmlFor="weight">Paino (kg)</label>
-                <input name="weight" ref={register}/>
+                <input name="weight" {...register ('weight')}/>
                 <label htmlFor="lure">Viehe</label>
-                <input name="lure" ref={register}/>
+                <input name="lure" {...register ('lure')}/>
                 <label htmlFor="fishingMethod">Kalastus tapa *</label>
-                <input name="fishingMethod" required ref={register}/>
+                <input name="fishingMethod" required {...register ('fishingMethod', { required: true })}/>
                 <label htmlFor="catchPhoto">Kuva</label>
                 <input name="catchPhoto" type="file" onChange={setFile}/>
                 <label htmlFor="date">Pvm *</label>
-                <input name="date" type="date" required ref={register}/>
+                <input name="date" type="date" required {...register ('date', { required: true })}/>
                 <p>* Pakollinen tieto</p>
                 <button disabled={loading}>{loading ? 'Loading...' : 'Save'}</button>
             </form>
